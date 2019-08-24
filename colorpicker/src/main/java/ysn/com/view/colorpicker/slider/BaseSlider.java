@@ -18,6 +18,7 @@ import android.widget.ImageView;
 
 import ysn.com.view.colorpicker.ColorPickerView;
 import ysn.com.view.colorpicker.annotation.DragMode;
+import ysn.com.view.colorpicker.listener.OnDragPositionListener;
 
 /**
  * @Author yangsanning
@@ -48,6 +49,8 @@ public abstract class BaseSlider extends FrameLayout {
     protected String preferenceName;
 
     protected Paint colorPaint;
+
+    protected OnDragPositionListener onDragPositionListener;
 
     public ColorPickerView colorPickerView;
     protected ImageView dragImageView;
@@ -159,6 +162,13 @@ public abstract class BaseSlider extends FrameLayout {
         if (dragImageView.getX() <= 0) {
             dragImageView.setX(0);
         }
+        callDragPositionListener();
+    }
+
+    private void callDragPositionListener() {
+        if (onDragPositionListener != null) {
+            onDragPositionListener.onDragPosition(dragPosition);
+        }
     }
 
     /**
@@ -187,6 +197,7 @@ public abstract class BaseSlider extends FrameLayout {
             dragImageView.setX(0);
         }
         colorPickerView.callColorListener(assembleColor(), false);
+        callDragPositionListener();
     }
 
     public void setDragPosition(float dragPosition) {
@@ -236,6 +247,10 @@ public abstract class BaseSlider extends FrameLayout {
 
     public void setPreferenceName(String preferenceName) {
         this.preferenceName = preferenceName;
+    }
+
+    public void setOnDragPositionListener(OnDragPositionListener onDragPositionListener) {
+        this.onDragPositionListener = onDragPositionListener;
     }
 
     public abstract void onInflateFinished();

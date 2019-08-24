@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <ysn.com.view.colorpicker.ColorPickerView
-        android:id="@+id/colorPickerView"
+        android:id="@+id/main_activity_color_picker_view"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_gravity="center"
@@ -18,16 +18,25 @@
         app:cpv_swatches="@drawable/ic_default_palette" />
 
     <ysn.com.view.colorpicker.slider.AlphaSlideBar
-        android:id="@+id/alphaSlideBar"
+        android:id="@+id/main_activity_alpha_slide_bar"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_margin="15dp"
         app:asb_drag="@drawable/ic_default_drag" />
 
     <ysn.com.view.colorpicker.slider.BrightnessSlideBar
-        android:id="@+id/brightnessSlide"
+        android:id="@+id/main_activity_brightness_slide"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_margin="15dp"
         app:bsb_drag="@drawable/ic_default_drag" />
+
+    <SeekBar
+        android:id="@+id/main_activity_seek_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="15dp"
+        android:max="100"
+        android:min="0" />
 </LinearLayout>
