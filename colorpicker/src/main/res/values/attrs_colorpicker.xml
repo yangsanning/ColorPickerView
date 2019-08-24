@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ColorPickerView">
+        <attr name="cpv_swatches" format="reference" />
+        <attr name="cpv_drag" format="reference" />
+        <attr name="cpv_drag_size" format="reference|dimension" />
+        <attr name="cpv_drag_alpha" format="float" />
+        <attr name="cpv_tag_alpha" format="float" />
+        <attr name="cpv_preference_name" format="string" />
+        <attr name="cpv_drag_mode" format="enum">
+            <enum name="always" value="0" />
+            <enum name="last" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="AlphaSlideBar">
+        <attr name="asb_drag" format="reference" />
+        <attr name="asb_drag_size" format="reference|dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="BrightnessSlideBar">
+        <attr name="bsb_drag" format="reference" />
+        <attr name="bsb_drag_size" format="reference|dimension" />
+    </declare-styleable>
+</resources>
