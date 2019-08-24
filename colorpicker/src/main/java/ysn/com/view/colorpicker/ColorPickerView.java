@@ -26,8 +26,8 @@ import androidx.lifecycle.OnLifecycleEvent;
 import ysn.com.view.colorpicker.annotation.DragMode;
 import ysn.com.view.colorpicker.annotation.TagMode;
 import ysn.com.view.colorpicker.bean.ColorEnvelope;
-import ysn.com.view.colorpicker.listener.ColorEnvelopeListener;
-import ysn.com.view.colorpicker.listener.ColorListener;
+import ysn.com.view.colorpicker.listener.OnColorEnvelopeListener;
+import ysn.com.view.colorpicker.listener.OnColorSelectListener;
 import ysn.com.view.colorpicker.listener.BaseColorListener;
 import ysn.com.view.colorpicker.preference.ColorPickerPreferenceManager;
 import ysn.com.view.colorpicker.slider.AlphaSlideBar;
@@ -67,7 +67,7 @@ public class ColorPickerView extends FrameLayout implements LifecycleObserver {
     private Point dragPoint;
     private boolean isVisibleTag = false;
 
-    public BaseColorListener colorListener;
+    public BaseColorListener onColorSelectListener;
 
     /**
      * 取色板(被取色的 view)
@@ -274,7 +274,7 @@ public class ColorPickerView extends FrameLayout implements LifecycleObserver {
      * @param isDrag 是否拖动
      */
     public void callColorListener(int color, boolean isDrag) {
-        if (colorListener != null) {
+        if (onColorSelectListener != null) {
             dragColor = color;
             if (getAlphaSlideBar() != null) {
                 getAlphaSlideBar().updateColor();
@@ -284,10 +284,10 @@ public class ColorPickerView extends FrameLayout implements LifecycleObserver {
                 getBrightnessSlider().updateColor();
                 dragColor = getBrightnessSlider().assembleColor();
             }
-            if (colorListener instanceof ColorListener) {
-                ((ColorListener) colorListener).onColorSelected(dragColor, isDrag);
-            } else if (colorListener instanceof ColorEnvelopeListener) {
-                ((ColorEnvelopeListener) colorListener).onColorSelected(new ColorEnvelope(dragColor), isDrag);
+            if (onColorSelectListener instanceof OnColorSelectListener) {
+                ((OnColorSelectListener) onColorSelectListener).onColor(dragColor, isDrag);
+            } else if (onColorSelectListener instanceof OnColorEnvelopeListener) {
+                ((OnColorEnvelopeListener) onColorSelectListener).onColor(new ColorEnvelope(dragColor), isDrag);
             }
 
             if (tagView != null) {
@@ -323,8 +323,8 @@ public class ColorPickerView extends FrameLayout implements LifecycleObserver {
         }
     }
 
-    public void setColorListener(BaseColorListener colorListener) {
-        this.colorListener = colorListener;
+    public void setOnColorSelectListener(BaseColorListener onColorSelectListener) {
+        this.onColorSelectListener = onColorSelectListener;
     }
 
 

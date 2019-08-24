@@ -7,7 +7,7 @@ import android.widget.SeekBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import ysn.com.view.colorpicker.ColorPickerView;
-import ysn.com.view.colorpicker.listener.ColorEnvelopeListener;
+import ysn.com.view.colorpicker.listener.OnColorEnvelopeListener;
 import ysn.com.view.colorpicker.slider.AlphaSlideBar;
 import ysn.com.view.colorpicker.slider.BrightnessSlideBar;
 
@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ColorPickerView colorPickerView = findViewById(R.id.main_activity_color_picker_view);
-        colorPickerView.setColorListener((ColorEnvelopeListener) (envelope, isDrag) ->
+        colorPickerView.setOnColorSelectListener((OnColorEnvelopeListener) (envelope, isDrag) ->
                 Log.d("test", "color: " + envelope.getHexCode()));
 
         SeekBar seekBar = findViewById(R.id.main_activity_seek_bar);
