@@ -27,7 +27,7 @@ import ysn.com.view.colorpicker.listener.OnDragPositionListener;
  * @Date 2019/8/24
  * @History 2019/8/24 author: description:
  */
-public abstract class BaseSlider extends FrameLayout {
+public abstract class BaseSliderBar extends FrameLayout {
 
     /**
      * 拖动控件图片
@@ -55,22 +55,22 @@ public abstract class BaseSlider extends FrameLayout {
     public ColorPickerView colorPickerView;
     protected ImageView dragImageView;
 
-    public BaseSlider(Context context) {
+    public BaseSliderBar(Context context) {
         this(context, null);
     }
 
-    public BaseSlider(Context context, AttributeSet attrs) {
+    public BaseSliderBar(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public BaseSlider(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BaseSliderBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initAttrs(attrs);
         initView();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public BaseSlider(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public BaseSliderBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initAttrs(attrs);
         initView();
@@ -78,7 +78,7 @@ public abstract class BaseSlider extends FrameLayout {
 
     private void initView() {
         this.colorPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        this.setBackgroundColor(Color.WHITE);
+        this.setBackgroundColor(Color.TRANSPARENT);
 
         dragImageView = new ImageView(getContext());
         if (dragDrawable != null) {
@@ -225,7 +225,7 @@ public abstract class BaseSlider extends FrameLayout {
         return pureColor;
     }
 
-    public BaseSlider setColorPickerView(ColorPickerView colorPickerView) {
+    public BaseSliderBar setColorPickerView(ColorPickerView colorPickerView) {
         this.colorPickerView = colorPickerView;
         return this;
     }

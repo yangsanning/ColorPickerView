@@ -22,7 +22,7 @@ import ysn.com.view.colorpicker.utils.ConvertUtils;
  * @Date 2019/8/24
  * @History 2019/8/24 author: description:
  */
-public class AlphaSlideBar extends BaseSlider {
+public class AlphaSlideBar extends BaseSliderBar {
 
     private Bitmap backgroundBitmap;
     private AlphaTileDrawable drawable = new AlphaTileDrawable();

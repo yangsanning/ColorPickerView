@@ -3,8 +3,10 @@ package ysn.com.view.colorpicker.slider;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
+import android.graphics.RectF;
 import android.graphics.Shader;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -20,7 +22,21 @@ import ysn.com.view.colorpicker.utils.ConvertUtils;
  * @Date 2019/8/24
  * @History 2019/8/24 author: description:
  */
-public class BrightnessSlideBar extends BaseSlider {
+public class BrightnessSlideBar extends BaseSliderBar {
+
+    /**
+     * 中间seekBar的高度
+     */
+    protected int seekBarHeight;
+    /**
+     * 中间seekBar的圆角
+     */
+    protected int seekBarRound;
+    /**
+     * 中间seekBar的左右边距
+     */
+    protected int seekBarMargin;
+    protected RectF seekBarRectF = new RectF();
 
     public BrightnessSlideBar(Context context) {
         super(context);
@@ -44,8 +60,13 @@ public class BrightnessSlideBar extends BaseSlider {
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.BrightnessSlideBar);
 
         dragDrawable = typedArray.getDrawable(R.styleable.BrightnessSlideBar_bsb_drag);
-        dragSize = typedArray.getDimensionPixelSize(R.styleable.ColorPickerView_cpv_drag_size,
+        dragSize = typedArray.getDimensionPixelSize(R.styleable.BrightnessSlideBar_bsb_drag_size,
                 ConvertUtils.dp2px(getContext(), 30));
+        seekBarHeight = typedArray.getDimensionPixelSize(R.styleable.BrightnessSlideBar_bsb_seek_bar_height,
+                ConvertUtils.dp2px(getContext(), 6));
+        seekBarRound = typedArray.getDimensionPixelSize(R.styleable.BrightnessSlideBar_bsb_seek_bar_round,
+                ConvertUtils.dp2px(getContext(), 30));
+        seekBarMargin = dragSize / 2;
 
         typedArray.recycle();
     }
@@ -60,6 +81,21 @@ public class BrightnessSlideBar extends BaseSlider {
         int endColor = Color.HSVToColor(hsv);
         Shader shader = new LinearGradient(0, 0, getWidth(), getHeight(), startColor, endColor, Shader.TileMode.CLAMP);
         colorPaint.setShader(shader);
+    }
+
+    @Override
+    protected void onSizeChanged(int viewWidth, int viewHeight, int oldw, int oldh) {
+        super.onSizeChanged(viewWidth, viewHeight, oldw, oldh);
+        int height = (viewHeight - seekBarHeight) / 2;
+        seekBarRectF.left = seekBarMargin;
+        seekBarRectF.right = viewWidth - seekBarMargin;
+        seekBarRectF.top = height;
+        seekBarRectF.bottom = height + seekBarHeight;
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        canvas.drawRoundRect(seekBarRectF, seekBarRound, seekBarRound, colorPaint);
     }
 
     @Override

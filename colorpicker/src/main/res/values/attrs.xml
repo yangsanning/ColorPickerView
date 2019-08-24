@@ -21,5 +21,7 @@
     <declare-styleable name="BrightnessSlideBar">
         <attr name="bsb_drag" format="reference" />
         <attr name="bsb_drag_size" format="reference|dimension" />
+        <attr name="bsb_seek_bar_height" format="reference|dimension" />
+        <attr name="bsb_seek_bar_round" format="reference|dimension" />
     </declare-styleable>
 </resources>
