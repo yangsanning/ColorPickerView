@@ -26,9 +26,9 @@ import androidx.lifecycle.OnLifecycleEvent;
 import ysn.com.view.colorpicker.annotation.DragMode;
 import ysn.com.view.colorpicker.annotation.TagMode;
 import ysn.com.view.colorpicker.bean.ColorEnvelope;
+import ysn.com.view.colorpicker.listener.BaseColorListener;
 import ysn.com.view.colorpicker.listener.OnColorEnvelopeListener;
 import ysn.com.view.colorpicker.listener.OnColorSelectListener;
-import ysn.com.view.colorpicker.listener.BaseColorListener;
 import ysn.com.view.colorpicker.preference.ColorPickerPreferenceManager;
 import ysn.com.view.colorpicker.slider.AlphaSlideBar;
 import ysn.com.view.colorpicker.slider.BrightnessSlideBar;
@@ -139,6 +139,10 @@ public class ColorPickerView extends FrameLayout implements LifecycleObserver {
                         } else {
                             selectCenter();
                         }
+                        ViewGroup.LayoutParams layoutParams = swatchesImageView.getLayoutParams();
+                        layoutParams.height = getMeasuredHeight() - dragSize;
+                        layoutParams.width = getMeasuredWidth() - dragSize;
+                        swatchesImageView.setLayoutParams(layoutParams);
                     }
                 });
     }
@@ -234,8 +238,8 @@ public class ColorPickerView extends FrameLayout implements LifecycleObserver {
      * 设置拖动控件坐标
      */
     public void updateDragCoordinate(int x, int y) {
-        dragImageView.setX(x - (dragImageView.getMeasuredWidth() / 2));
-        dragImageView.setY(y - (dragImageView.getMeasuredHeight() / 2));
+        dragImageView.setX(x - ((dragImageView.getMeasuredWidth() - dragSize) / 2));
+        dragImageView.setY(y - ((dragImageView.getMeasuredHeight() - dragSize) / 2));
     }
 
     /**
@@ -276,14 +280,14 @@ public class ColorPickerView extends FrameLayout implements LifecycleObserver {
     public void callColorListener(int color, boolean isDrag) {
         if (onColorSelectListener != null) {
             dragColor = color;
-            if (getAlphaSlideBar() != null) {
-                getAlphaSlideBar().updateColor();
-                dragColor = getAlphaSlideBar().assembleColor();
-            }
-            if (getBrightnessSlider() != null) {
-                getBrightnessSlider().updateColor();
-                dragColor = getBrightnessSlider().assembleColor();
-            }
+//            if (getAlphaSlideBar() != null) {
+//                getAlphaSlideBar().updateColor();
+//                dragColor = getAlphaSlideBar().assembleColor();
+//            }
+//            if (getBrightnessSlider() != null) {
+//                getBrightnessSlider().updateColor();
+//                dragColor = getBrightnessSlider().assembleColor();
+//            }
             if (onColorSelectListener instanceof OnColorSelectListener) {
                 ((OnColorSelectListener) onColorSelectListener).onColor(dragColor, isDrag);
             } else if (onColorSelectListener instanceof OnColorEnvelopeListener) {
@@ -396,7 +400,7 @@ public class ColorPickerView extends FrameLayout implements LifecycleObserver {
      * 设置拖动控件坐标(放在中间)
      */
     public void selectCenter() {
-        setDragPoint(getMeasuredWidth() / 2, getMeasuredHeight() / 2);
+        setDragPoint(((getMeasuredWidth() - dragSize) / 2), ((getMeasuredHeight() - dragSize) / 2));
     }
 
     /**
@@ -449,12 +453,12 @@ public class ColorPickerView extends FrameLayout implements LifecycleObserver {
         double x = hsv[1] * Math.cos(Math.toRadians(hsv[0]));
         double y = hsv[1] * Math.sin(Math.toRadians(hsv[0]));
 
-        int pointX = (int) ((x + 1) * radius);
-        int pointY = (int) ((1 - y) * radius);
+        int pointX = (int) ((x + 1) * radius - dragSize / 2f);
+        int pointY = (int) ((1 - y) * radius - dragSize / 2f);
 
-        if (this.brightnessSlider != null) {
-            this.brightnessSlider.setDragPosition(hsv[2]);
-        }
+//        if (this.brightnessSlider != null) {
+//            this.brightnessSlider.setDragPosition(hsv[2]);
+//        }
         Point mappedPoint = PointMapper.getColorPoint(this, new Point(pointX, pointY));
         dragPureColor = color;
         dragColor = color;
